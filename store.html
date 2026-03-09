@@ -68,7 +68,13 @@
 
     </div>
 </div>
-
+<script src="Search Logic
+    function filterCoins() {
+        const query = document.getElementById('coinSearch').value.toLowerCase();
+        const filtered = coins.filter(c => c.name.toLowerCase().includes(query));
+        displayCoins(filtered);
+    }
+    </script>
 <footer>
     <p>2026 Ianni's Coins and Currency</p>
 </footer>
