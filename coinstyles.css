@@ -1,0 +1,87 @@
+:root {
+            --gold: #d4af37;
+            --dark-slate: #2f4f4f;
+            --paper: #f4f1ea;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            background-color: var(--paper);
+            color: #333;
+        }
+
+        header {
+            background-color: var(--dark-slate);
+            color: var(--gold);
+            padding: 2rem;
+            text-align: center;
+            border-bottom: 5px solid var(--gold);
+        }
+
+        nav {
+            background: #1e3333;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+            font-weight: bold;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 20px auto;
+            padding: 20px;
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .item-card {
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.2s;
+        }
+
+        .item-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .item-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            background-color: #eee;
+        }
+
+        .item-info {
+            padding: 15px;
+        }
+
+        .tag {
+            display: inline-block;
+            background: var(--gold);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            margin-bottom: 10px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            background: var(--dark-slate);
+            color: white;
+            margin-top: 40px;
+        }
