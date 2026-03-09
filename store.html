@@ -66,3 +66,111 @@
 
 </body>
 </html>
+    <h1>The Collector's Vault</h1>
+    <div class="search-container">
+        <input type="text" id="coinSearch" placeholder="Search by year, name, or grade..." onkeyup="filterCoins()">
+    </div>
+</header>
+
+<div class="main-content">
+    <div class="inventory">
+        <div class="coin-grid" id="coinGrid">
+            </div>
+    </div>
+
+    <div class="sidebar">
+        <h3>Your Portfolio (Cart)</h3>
+        <div id="cart-items">Your cart is empty.</div>
+        <hr>
+        <p><strong>Total: $<span id="cart-total">0.00</span></strong></p>
+        <button class="buy-btn" id="checkout-trigger" onclick="showCheckout()" style="display:none;">Proceed to Checkout</button>
+
+        <div id="checkout-form">
+            <h4>Shipping & Payment</h4>
+            <label>Full Name</label>
+            <input type="text" placeholder="John Doe">
+            <label>Shipping Address</label>
+            <input type="text" placeholder="123 Numismatic Way">
+            <label>Credit Card Number</label>
+            <input type="text" placeholder="XXXX-XXXX-XXXX-XXXX">
+            <button class="pay-btn" onclick="processPayment()">Complete Purchase</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    // 1. Database of Coins
+    const coins = [
+        { id: 1, name: "1921 Morgan Silver Dollar", grade: "MS-63", price: 55.00 },
+        { id: 2, name: "1909-S VDB Lincoln Cent", grade: "VF-20", price: 950.00 },
+        { id: 3, name: "1945 Gold Dos Pesos", grade: "BU", price: 125.00 },
+        { id: 4, name: "1881-S Morgan Dollar", grade: "MS-65", price: 180.00 }
+    ];
+
+    let cart = [];
+
+    // 2. Render Coins to Screen
+    function displayCoins(items) {
+        const grid = document.getElementById('coinGrid');
+        grid.innerHTML = items.map(coin => `
+            <div class="coin-card">
+                <div style="font-size: 40px;">🪙</div>
+                <h3>${coin.name}</h3>
+                <p>Grade: ${coin.grade}</p>
+                <div style="color:var(--accent); font-weight:bold; margin-bottom:10px;">$${coin.price.toFixed(2)}</div>
+                <button class="buy-btn" onclick="addToCart(${coin.id})">Add to Cart</button>
+            </div>
+        `).join('');
+    }
+
+    // 3. Search Logic
+    function filterCoins() {
+        const query = document.getElementById('coinSearch').value.toLowerCase();
+        const filtered = coins.filter(c => c.name.toLowerCase().includes(query));
+        displayCoins(filtered);
+    }
+
+    // 4. Cart Logic
+    function addToCart(id) {
+        const coin = coins.find(c => c.id === id);
+        cart.push(coin);
+        updateCartUI();
+    }
+
+    function updateCartUI() {
+        const cartDiv = document.getElementById('cart-items');
+        const totalSpan = document.getElementById('cart-total');
+        const checkoutBtn = document.getElementById('checkout-trigger');
+
+        if(cart.length === 0) {
+            cartDiv.innerHTML = "Your cart is empty.";
+            checkoutBtn.style.display = "none";
+        } else {
+            cartDiv.innerHTML = cart.map(item => `
+                <div class="cart-item">
+                    <span>${item.name}</span>
+                    <span>$${item.price.toFixed(2)}</span>
+                </div>
+            `).join('');
+            
+            const total = cart.reduce((sum, item) => sum + item.price, 0);
+            totalSpan.innerText = total.toFixed(2);
+            checkoutBtn.style.display = "block";
+        }
+    }
+
+    // 5. Payment Interaction
+    function showCheckout() {
+        document.getElementById('checkout-form').style.display = 'block';
+    }
+
+    function processPayment() {
+        alert("Success! Your order has been placed. Thank you for shopping with Uncle's Coins.");
+        cart = [];
+        updateCartUI();
+        document.getElementById('checkout-form').style.display = 'none';
+    }
+
+    // Initialize
+    displayCoins(coins);
+</script>
